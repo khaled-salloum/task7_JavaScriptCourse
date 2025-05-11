@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Array Doubler</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        
+        .array-display {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .array-box {
+            width: 45%;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .original-array {
+            background-color: #e3f2fd;
+            border: 2px solid #64b5f6;
+        }
+        
+        .doubled-array {
+            background-color: #e8f5e9;
+            border: 2px dashed #81c784;
+            min-height: 60px;
+        }
+        
+        .array-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .array-elements {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .number {
+            background: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .doubled .number {
+            background: #81c784;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(106, 17, 203, 0.4);
+        }
+        
+        .animation {
+            animation: pulse 0.5s ease-out;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Array Doubler</h1>
+        
+        <div class="array-display">
+            <div class="array-box original-array">
+                <div class="array-title">Original Array</div>
+                <div class="array-elements" id="originalArray"></div>
+            </div>
+            
+            <div class="array-box doubled-array">
+                <div class="array-title">Doubled Array</div>
+                <div class="array-elements" id="doubledArray"></div>
+            </div>
+        </div>
+        
+        <button onclick="doubleArray()">Double Numbers</button>
+    </div>
+
+    <script>
+        const originalNumbers = [1, 2, 3, 4, 5];
+        const originalArrayEl = document.getElementById('originalArray');
+        const doubledArrayEl = document.getElementById('doubledArray');
+        
+        // Display original array
+        originalNumbers.forEach(num => {
+            const numEl = document.createElement('div');
+            numEl.className = 'number';
+            numEl.textContent = num;
+            originalArrayEl.appendChild(numEl);
+        });
+        
+        function doubleArray() {
+            // Clear previous content
+            doubledArrayEl.innerHTML = '';
+            
+            // Double numbers with animations
+            originalNumbers.forEach((num, index) => {
+                setTimeout(() => {
+                    const doubledNum = num * 2;
+                    const numEl = document.createElement('div');
+                    numEl.className = 'number';
+                    numEl.textContent = doubledNum;
+                    
+                    doubledArrayEl.appendChild(numEl);
+                    
+                    // Add effect after appending
+                    setTimeout(() => {
+                        numEl.classList.add('doubled');
+                        numEl.classList.add('animation');
+                        
+                        // Remove animation class after completion
+                        setTimeout(() => {
+                            numEl.classList.remove('animation');
+                        }, 500);
+                    }, 50);
+                    
+                }, index * 300); // Delay between each number
+            });
+            
+            // Container animation
+            doubledArrayEl.parentElement.classList.add('animation');
+            setTimeout(() => {
+                doubledArrayEl.parentElement.classList.remove('animation');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
